@@ -3,7 +3,7 @@ import sys
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import pandas as pd
-from PyQt5.QtWidgets import QFileDialog, QWidget, QApplication
+# from PyQt5.QtWidgets import QFileDialog, QWidget, QApplication
 from numpy import average
 
 zero_offset = 0
@@ -12,18 +12,18 @@ fig = plt.figure()
 # creating a subplot
 ax1 = fig.add_subplot(1, 1, 1)
 
-file_name = 'C:/Users/sjones8/Clamp_Force_Test__2019-06-07T15-59-11_1.csv'
+file_name = 'C:/TEMP/trial1.csv'
 test_name = 'Clamp_Force_Test'
 
 
-def select_file():
-    w = QWidget()
-    w.resize(320, 240)
-    w.setWindowTitle("Select CSV for reading")
-    filename, _ = QFileDialog.getOpenFileName(w, 'Open File', '/var/log/ethicon/loki/DEMDAQ/')
-    # sys.exit(a.exec_())
-
-    return filename
+# def select_file():
+#     w = QWidget()
+#     w.resize(320, 240)
+#     w.setWindowTitle("Select CSV for reading")
+#     filename, _ = QFileDialog.getOpenFileName(w, 'Open File', '/var/log/ethicon/loki/DEMDAQ/')
+#     # sys.exit(a.exec_())
+#
+#     return filename
 
 
 def tare_data_values(data_frame, num_points=100):
@@ -78,8 +78,12 @@ def animate(i):
 
     if len(tared_ys) < plot_length:
         plot_length = len(tared_ys)
-    ax1.plot(tared_ys[-plot_length:])
+    # ax1.plot(tared_ys[-plot_length:])
+    ax1.plot(ys)
 
+
+    # Issue somewhere in either Python 3 to Python 2, or syntax, animation should
+    # be displaying
     plt.xlabel('Sample Time')
     plt.ylabel('Force (N)')
     plt.title('Live graph with matplotlib')
@@ -87,7 +91,7 @@ def animate(i):
 
 def _main():
     global file_name
-    file_name = select_file()
+    # file_name = select_file()
 
     ani = animation.FuncAnimation(fig, animate, interval=1000)
     plt.show()
